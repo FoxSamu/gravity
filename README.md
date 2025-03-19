@@ -1,6 +1,6 @@
 # GRAVITY
 
-(scroll down for usage instructions, if you don't care about my interest in black holes)
+### (scroll down for usage instructions, if you don't care about my interest in black holes)
 
 Take a sheet of aluminum foil and try to press it into a ball, and compress it as small as you can. Maybe try it using a hydraulic press. How dense did you get it? Probably not as dense as a black hole.
 
@@ -28,11 +28,11 @@ It doesn't come close to the actual photo from EHT though, and that's for severa
 - This is a real-time simulation, we want to keep it real-time and stick to some fast approximations.
 
 # Want to see it for yourself?
-### If you skipped the above rant about what black holes are, this is where you should stop skipping.
+### (these are said usage instructions)
 
 You are in luck! Navigate your spaceship to the directory in which you cloned this repository, and run this one command:
 
-```
+```bash
 ./gradlew run
 ```
 
@@ -45,9 +45,36 @@ Once Gradle has finished doing 10 hours of building, a window will open and your
 
 _**Disclaimer**: I have not tested this on OSX. The app requires to be initialised on the first thread, and the JVM on OSX tends to not do that unless a specific argument is given. Gradle should do this, but I am not sure if it works._
 
+## Technical stuffs
+The base of this applet is written in Kotlin, which runs on the JVM. You can obtain an executable JAR file that should run in Java 21+, by running:
+
+```bash
+./gradlew build   # or `.\gradlew build` on windows
+```
+
+It will produce two JAR archives under `build/libs/`. The archive `gravity-[version]-all.jar` (note the `-all` suffix) has all the needed dependencies bundled. The other archive only contains the compiled project code and will not run. 
+
+On the premise that the Java version is at least 21 (check with `java -version`), the `-all`-suffixed archive can be run simply with:
+ 
+```bash
+java -jar path/to/gravity-[version]-all.jar
+```
+
+
+### Note for MacOS users
+Why?
+
+Also, the application should start on the first thread created for the process. This is a restriction of the underlying window toolkit, GLFW. On other operating systems, this is what the JVM does by default. However, on MacOS, _for some reason_, the JVM does _not_ start the app on the first thread by default.
+
+No worries, the JVM got you covered, you just need to add the `-XstartOnFirstThread` argument to the JVM (I have really no idea why this isn't the default behaviour). Like so:
+
+```bash
+java -XstartOnFirstThread -jar path/to/gravity-[version]-all.jar
+```
+
 # But- how?!
 
-Yes, I know you're impressed, but it's just a raytracer. Let me break down the basics down for you.
+Yes I know, it's impressive, but it's just a raytracer. Let me break down the basics down for you.
 
 ## The skymap
 The boring part is the skymap, it's a texture under `src/main/resources/skymap.png`. It is mapped to a sphere of quote-on-quote "infinite" radius. Whenever the raytracer hits nothing, it will simply take the direction of that ray and map it to a point on that infinite sphere, which in turn maps to a texture. This creates the nice starry galaxy background.

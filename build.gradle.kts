@@ -7,6 +7,7 @@ plugins {
     kotlin("jvm") version "2.0.20"
 
     id("org.lwjgl.plugin") version "0.0.34"
+    id("com.gradleup.shadow") version "8.3.5"
 
     application
     idea
