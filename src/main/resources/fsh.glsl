@@ -230,7 +230,7 @@ struct Action {
     int skip;
 
     // misc
-    float a, b, c, d;
+    float a, b, c;
     int obj;
 
     // return value
