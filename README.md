@@ -41,6 +41,8 @@ Or on Windows (because Windows is strange):
 .\gradlew run
 ```
 
+Note that windows is very strict on GPU scheduling, it may run really slow so it's best experienced in Linux.
+
 Once Gradle has finished doing 10 hours of building, a window will open and your personal black hole is ready to show you some cool raytracing tricks. There's nothing to interact with, but the camera and stars move so you'll get some nice angles eventually.
 
 _**Disclaimer**: I have not tested this on OSX. The app requires to be initialised on the first thread, and the JVM on OSX tends to not do that unless a specific argument is given. Gradle should do this, but I am not sure if it works._
